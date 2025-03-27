@@ -1,0 +1,52 @@
+<div class="card">
+    <div class="font-semibold text-xl mb-4">Clientes</div>
+    <input pInputText type="text" name="buscador" [(ngModel)]="globalFilter" [ngModelOptions]="{standalone: true}"
+        (input)="onFilterGlobal($event)" />
+    <button pButton icon="pi pi-pencil" class="p-button-sm p-button-rounded mr-2" (click)="link()">
+        Nuevo cliente
+    </button>
+
+    <p-table #dt [value]="data" [paginator]="true" [rows]="10"
+        [globalFilterFields]="['nombre', 'apellido', 'email', 'celular']" [showCurrentPageReport]="true"
+        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords}" [rowsPerPageOptions]="[5,10,20]">
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
+                <th pSortableColumn="nombre">Nombre <p-sortIcon field="nombre"></p-sortIcon>
+                    <input pInputText type="text" (input)="onFilterColumn($event, 'nombre')" class="w-full" />
+                </th>
+                <th pSortableColumn="apellido">Apellido <p-sortIcon field="apellido"></p-sortIcon>
+                    <input pInputText type="text" (input)="onFilterColumn($event, 'apellido')" class="w-full" />
+                </th>
+                <th pSortableColumn="email">Correo <p-sortIcon field="email"></p-sortIcon>
+                    <input pInputText type="text" (input)="onFilterColumn($event, 'email')" class="w-full" />
+                </th>
+                <th pSortableColumn="celular">Celular <p-sortIcon field="celular"></p-sortIcon>
+                    <input pInputText type="text" (input)="onFilterColumn($event, 'celular')" class="w-full" />
+                </th>
+                <th pSortableColumn="created">Creado <p-sortIcon field="created"></p-sortIcon></th>
+                <th>Opciones</th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-data>
+            <tr>
+                <td>{{ data.id }}</td>
+                <td>{{ data.nombre }}</td>
+                <td>{{ data.apellido }}</td>
+                <td>{{ data.email }}</td>
+                <td>{{ data.celular }}</td>
+                <td>{{ data.created | date }}</td>
+                <td class="btn-group">
+                    <button pButton icon="pi pi-pencil" class="p-button-sm p-button-rounded mr-2"
+                        (click)="link(data.id)"></button>
+
+                    <button pButton icon="pi pi-trash" class="p-button-sm p-button-rounded p-button-danger"
+                        (click)="confirmDelete(data)"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+    <button pButton label="Limpiar filtros" icon="pi pi-filter-slash" class="mt-3" (click)="clearFilters()"></button>
+</div>

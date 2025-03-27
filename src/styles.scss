@@ -3,3 +3,9 @@
 @use './assets/layout/layout.scss';
 @use 'primeicons/primeicons.css';
 @use './assets/demo/demo.scss';
+
+.btn-group {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}

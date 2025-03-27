@@ -18,7 +18,6 @@ import { TagModule } from 'primeng/tag';
 import { InputIconModule } from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { Product, ProductService } from '../service/product.service';
 
 interface Column {
     field: string;
@@ -208,16 +207,16 @@ interface ExportColumn {
 
         <p-confirmdialog [style]="{ width: '450px' }" />
     `,
-    providers: [MessageService, ProductService, ConfirmationService]
+    providers: [MessageService, ConfirmationService]
 })
 export class Crud implements OnInit {
     productDialog: boolean = false;
 
-    products = signal<Product[]>([]);
+    products = signal<any[]>([]);
 
-    product!: Product;
+    product!: any;
 
-    selectedProducts!: Product[] | null;
+    selectedProducts!: any[] | null;
 
     submitted: boolean = false;
 
@@ -230,10 +229,9 @@ export class Crud implements OnInit {
     cols!: Column[];
 
     constructor(
-        private productService: ProductService,
         private messageService: MessageService,
         private confirmationService: ConfirmationService
-    ) {}
+    ) { }
 
     exportCSV() {
         this.dt.exportCSV();
@@ -244,9 +242,6 @@ export class Crud implements OnInit {
     }
 
     loadDemoData() {
-        this.productService.getProducts().then((data) => {
-            this.products.set(data);
-        });
 
         this.statuses = [
             { label: 'INSTOCK', value: 'instock' },
@@ -275,7 +270,7 @@ export class Crud implements OnInit {
         this.productDialog = true;
     }
 
-    editProduct(product: Product) {
+    editProduct(product: any) {
         this.product = { ...product };
         this.productDialog = true;
     }
@@ -303,7 +298,7 @@ export class Crud implements OnInit {
         this.submitted = false;
     }
 
-    deleteProduct(product: Product) {
+    deleteProduct(product: any) {
         this.confirmationService.confirm({
             message: 'Are you sure you want to delete ' + product.name + '?',
             header: 'Confirm',
